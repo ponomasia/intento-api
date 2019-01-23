@@ -151,6 +151,7 @@ To do this one can add a `filter` object in a request. Valid `filter` keys are:
 - `intent` - by used intents like `ai.text.translate` or `ai.text.sentiment`
 - `client` - (for multi-key accounts) to choose a particular account; if no parameter present, the statistics is provided for all keys together.
 - `status` - by HTTP response codes like `200` or `4xx` (intended for error monitoring)
+- `lang_pair` - by language pair like `en/es` or `zh/fr`
 
 Each value can be omitted. If specified, it should be a string or a list of strings.
 Detailed examples below.
@@ -174,7 +175,7 @@ curl -XPOST -H 'apikey: YOUR_API_KEY' 'https://api.inten.to/usage/intento' -d {
 
 ### Filtering by intents
 
-To get statistics for a particular provider or for a list of some providers, specify the filter block in your request:
+To get statistics for a particular intent or for a list of some intents, specify the filter block in your request:
 
 ```sh
 curl -XPOST -H 'apikey: YOUR_API_KEY' 'https://api.inten.to/usage/intento' -d {
@@ -207,6 +208,23 @@ curl -XPOST -H 'apikey: YOUR_API_KEY' 'https://api.inten.to/usage/intento' -d '{
     },
     "filter": {
         "status": ["200", "3xx", "4xx", "5xx", "403"]
+    }
+}'
+```
+
+### Filtering by language pair
+
+To get statistics for a particular language pair or for a list of some language pairs, specify the filter block in your request:
+
+```sh
+curl -XPOST -H 'apikey: YOUR_API_KEY' 'https://api.inten.to/usage/intento' -d {
+    "range": {
+        "from": 1529280000,
+        "to": 1529884800,
+        "bucket": "1day"
+    },
+    "filter": {
+        "lang_pair": "en/zh"
     }
 }'
 ```
